@@ -6,20 +6,31 @@ using UnityEngine.Networking;
 
 public class loadassets : MonoBehaviour
 {
-    public Text loading ; 
+    public Text loading ;   
     
-    public IEnumerator webReq(string url, string name){
-        UnityWebRequest www = UnityWebRequestAssetBundle.GetAssetBundle(url);
-        // loading.text = "loading...";
-        yield return www.SendWebRequest();
-        // loading.text = "";
- 
-        if (www.result != UnityWebRequest.Result.Success) {
-            Debug.Log(www.error);
+    public IEnumerator webReq(string url, string name)
+    {
+        WWW request = WWW.LoadFromCacheOrDownload(url, 0);
+        while (!request.isDone)
+        {
+            // ProgressSlider.value = request.progress;
+            // string persentateTemp = "" + request.progress * 100;
+            // string[] strArray = persentateTemp.Split(char.Parse("."));
+            // PersentageText.text = strArray[0] + "%";
+            yield return null;
         }
-        else {
-            AssetBundle bundle = DownloadHandlerAssetBundle.GetContent(www);
-            Instantiate(bundle.LoadAsset(name));
+        if(request.error == null)
+        {
+            AssetBundle assetBundle = request.assetBundle;
+            Instantiate(assetBundle.LoadAsset(name));
+            // LoadingCanvas.SetActive(false);
+            // MainCanvas.SetActive(true);
+            Debug.Log("Success!!!");
         }
+        else
+        {
+            Debug.Log("Error"+request.error);
+        }
+        yield return null;
     }
 }
