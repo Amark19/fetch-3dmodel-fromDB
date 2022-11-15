@@ -7,8 +7,6 @@ using UnityEngine.Networking;
 public class loadassets : MonoBehaviour
 {
     public Text loading;
-    AssetBundle assetBundle;
-    placeModel placeM;
     public IEnumerator webReq(string url, string name)
     {
         WWW request = WWW.LoadFromCacheOrDownload(url, 0);
@@ -22,8 +20,8 @@ public class loadassets : MonoBehaviour
         }
         if (request.error == null)
         {
-            assetBundle = request.assetBundle;
-            placeM.updateModel(assetBundle.LoadAsset<GameObject>(name));
+            AssetBundle assetBundle = request.assetBundle;
+            this.GetComponent<placeModel>().updateModel(assetBundle.LoadAsset<GameObject>(name));
             // Instantiate(assetBundle.LoadAsset(name));
             // LoadingCanvas.SetActive(false);
             // MainCanvas.SetActive(true);

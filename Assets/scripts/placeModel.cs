@@ -10,7 +10,7 @@ public class placeModel : MonoBehaviour
     // Start is called before the first frame update
     public void clkToSpawn()
     {
-        spawnedObj = Instantiate(objToSpawn, new Vector3(50, 2, 50), transform.rotation);
+        spawnedObj = Instantiate(objToSpawn, new Vector3(2, 0, -10), transform.rotation);
     }
 
     // Update is called once per frame
@@ -19,8 +19,8 @@ public class placeModel : MonoBehaviour
 
     }
 
-    public void updateModel(GameObject objToSpawn)
+    public void updateModel(GameObject obj)
     {
-        objToSpawn = objToSpawn;
+        objToSpawn = obj;
     }
 }
