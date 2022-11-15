@@ -6,8 +6,9 @@ using UnityEngine.Networking;
 
 public class loadassets : MonoBehaviour
 {
-    public Text loading ;   
-    
+    public Text loading;
+    AssetBundle assetBundle;
+    placeModel placeM;
     public IEnumerator webReq(string url, string name)
     {
         WWW request = WWW.LoadFromCacheOrDownload(url, 0);
@@ -19,18 +20,23 @@ public class loadassets : MonoBehaviour
             // PersentageText.text = strArray[0] + "%";
             yield return null;
         }
-        if(request.error == null)
+        if (request.error == null)
         {
-            AssetBundle assetBundle = request.assetBundle;
-            Instantiate(assetBundle.LoadAsset(name));
+            assetBundle = request.assetBundle;
+            placeM.updateModel(assetBundle.LoadAsset<GameObject>(name));
+            // Instantiate(assetBundle.LoadAsset(name));
             // LoadingCanvas.SetActive(false);
             // MainCanvas.SetActive(true);
             Debug.Log("Success!!!");
         }
         else
         {
-            Debug.Log("Error"+request.error);
+            Debug.Log("Error" + request.error);
         }
         yield return null;
     }
+
+    //return gameObject
+
+
 }
