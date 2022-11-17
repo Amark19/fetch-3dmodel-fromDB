@@ -6,25 +6,30 @@ using UnityEngine.Networking;
 
 public class loadassets : MonoBehaviour
 {
-    public Text loading;
+    public Slider ProgressSlider;
+    public Text PercentageText ;
+    public GameObject LoadingCanvas;
+    public GameObject MainCanvas;
     public IEnumerator webReq(string url, string name)
     {
         WWW request = WWW.LoadFromCacheOrDownload(url, 0);
         while (!request.isDone)
         {
-            // ProgressSlider.value = request.progress;
-            // string persentateTemp = "" + request.progress * 100;
-            // string[] strArray = persentateTemp.Split(char.Parse("."));
-            // PersentageText.text = strArray[0] + "%";
+            ProgressSlider.value = request.progress;
+            string persentateTemp = "" + request.progress * 100;
+            string[] strArray = persentateTemp.Split(char.Parse("."));
+            PercentageText.text = strArray[0] + "%";
+            // Debug.Log(strArray[0] + "%");
             yield return null;
         }
         if (request.error == null)
         {
+            ProgressSlider.value = 1;
+            PercentageText.text = "100%";
             AssetBundle assetBundle = request.assetBundle;
+            LoadingCanvas.SetActive(false);
             this.GetComponent<placeModel>().updateModel(assetBundle.LoadAsset<GameObject>(name));
-            // Instantiate(assetBundle.LoadAsset(name));
-            // LoadingCanvas.SetActive(false);
-            // MainCanvas.SetActive(true);
+            MainCanvas.SetActive(true);
             Debug.Log("Success!!!");
         }
         else

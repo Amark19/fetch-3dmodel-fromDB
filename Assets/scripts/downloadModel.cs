@@ -6,7 +6,6 @@ public class downloadModel : MonoBehaviour
 {
 
     public string url;
-    public GameObject Download_btn;
     public GameObject tap_to_btn;
     public string name_model;
     // Start is called before the first frame update
@@ -16,11 +15,11 @@ public class downloadModel : MonoBehaviour
         // if(name_model){
         //     Debug.Log("present");
         // }
+        DownloadModel();
     }
     public void DownloadModel()
     {
         StartCoroutine(this.GetComponent<loadassets>().webReq(url, name_model));
-        Download_btn.SetActive(false);
         tap_to_btn.SetActive(true);
     }
 
