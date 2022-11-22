@@ -4,12 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 
-public class loadassets : MonoBehaviour
+public class loadUnloadassets : MonoBehaviour
 {
     public Slider ProgressSlider;
     public Text PercentageText ;
     public GameObject LoadingCanvas;
     public GameObject MainCanvas;
+    AssetBundle assetBundle;
     public IEnumerator webReq(string url, string name)
     {
         WWW request = WWW.LoadFromCacheOrDownload(url, 0);
@@ -26,20 +27,21 @@ public class loadassets : MonoBehaviour
         {
             ProgressSlider.value = 1;
             PercentageText.text = "100%";
-            AssetBundle assetBundle = request.assetBundle;
+            assetBundle = request.assetBundle;
             LoadingCanvas.SetActive(false);
             this.GetComponent<placeModel>().updateModel(assetBundle.LoadAsset<GameObject>(name));
             MainCanvas.SetActive(true);
             Debug.Log("Success!!!");
+            assetBundle.Unload(false);
         }
         else
         {
-            Debug.Log("Error" + request.error);
+            Debug.Log("Error : " + request.error);
         }
         yield return null;
     }
 
-    //return gameObject
+   
 
-
+    
 }

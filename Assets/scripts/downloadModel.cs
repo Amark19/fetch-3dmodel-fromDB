@@ -19,7 +19,7 @@ public class downloadModel : MonoBehaviour
     }
     public void DownloadModel()
     {
-        StartCoroutine(this.GetComponent<loadassets>().webReq(url, name_model));
+        StartCoroutine(this.GetComponent<loadUnloadassets>().webReq(url, name_model));
         tap_to_btn.SetActive(true);
     }
 
