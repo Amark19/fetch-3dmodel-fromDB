@@ -12,9 +12,6 @@ public class downloadModel : MonoBehaviour
 
     void Start()
     {
-        // if(name_model){
-        //     Debug.Log("present");
-        // }
         DownloadModel();
     }
     public void DownloadModel()
